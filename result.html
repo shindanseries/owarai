@@ -1,165 +1,29 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>お笑いステータス診断｜診断結果</title>
-
 <link rel="stylesheet" href="css/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
-
 <body>
-
 <div class="container">
-
 <h1>診断結果</h1>
-
 <div class="result-card">
-
 <div id="typeCode" class="typeCode">---</div>
 <div id="typeName" class="typeName">---</div>
-
 <p id="description" class="description">読み込み中...</p>
-
 </div>
-
 <div class="buttonArea">
-
 <button onclick="shareResult()" class="nextButton">
 Xでシェア
 </button>
-
 <a href="index.html" class="restartButton">
 もう一度診断する
 </a>
-
 </div>
-
 </div>
-
-<script>
-
-// ============================
-// 回答取得
-// ============================
-let answers = {};
-
-for (let i = 1; i <= 6; i++) {
-    const data = JSON.parse(localStorage.getItem("question" + i) || "{}");
-    Object.assign(answers, data);
-}
-
-// ============================
-// 平均計算
-// ============================
-function average(list) {
-    let sum = 0;
-    let count = 0;
-
-    list.forEach(key => {
-        const val = Number(answers[key]);
-        if (!isNaN(val)) {
-            sum += val;
-            count++;
-        }
-    });
-
-    return count === 0 ? 0 : sum / count;
-}
-
-// ============================
-// PNIO ⇔ SABC 軸
-// ============================
-
-// P / S
-const first  = average(["q2","q5","q10","q13","q18","q22"]) >= 3 ? "P" : "S";
-
-// N / A
-const second = average(["q1","q7","q11","q16","q19","q23"]) >= 3 ? "N" : "A";
-
-// I / B
-const third  = average(["q4","q8","q12","q15","q17","q21"]) >= 3 ? "I" : "B";
-
-// O / C
-const fourth = average(["q3","q6","q9","q14","q20","q24"]) >= 3 ? "O" : "C";
-
-// ============================
-// タイプ生成
-// ============================
-const type = first + second + third + fourth;
-
-// ============================
-// 結果データ
-// ============================
-const resultData = {
-
-PNIO: {
-    title: "直感クリエイター型",
-    text: "自由な発想と感覚で笑いを生み出すタイプ。空気を読むより空気を作る側。"
-},
-
-PNAO: {
-    title: "バランス表現者型",
-    text: "感性と安定感を両立するオールラウンダー。"
-},
-
-PNIC: {
-    title: "感性職人型",
-    text: "細かい観察と独自視点で笑いを構築するタイプ。"
-},
-
-PNAO: {
-    title: "安定ムードメーカー型",
-    text: "場の空気を柔らかくする万能型。"
-},
-
-SABC: {
-    title: "構造分析型エリート",
-    text: "論理と構成力で笑いを設計するタイプ。"
-}
-
-};
-
-// ============================
-// 表示
-// ============================
-document.getElementById("typeCode").textContent = type;
-
-if (resultData[type]) {
-    document.getElementById("typeName").textContent = resultData[type].title;
-    document.getElementById("description").textContent = resultData[type].text;
-} else {
-    document.getElementById("typeName").textContent = "未定義タイプ";
-    document.getElementById("description").textContent = "タイプ定義が不足しています";
-}
-
-// ============================
-// シェア
-// ============================
-function shareResult() {
-
-    const text =
-        "私の芸能ステータス診断は「" +
-        type +
-        "（" +
-        (resultData[type]?.title || "未定義") +
-        "）」でした！";
-
-    const url = "https://migimimisan.github.io/owarai/";
-
-    window.open(
-        "https://twitter.com/intent/tweet?text=" +
-        encodeURIComponent(text) +
-        "&url=" +
-        encodeURIComponent(url),
-        "_blank"
-    );
-}
-
-</script>
-
+<script src="js/result.js"></script>
 </body>
 </html>
