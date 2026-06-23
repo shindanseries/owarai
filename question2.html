@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>芸能ステータス診断｜質問2/6</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="progress">
+
+<div class="progress-bar" style="width:33.3%;"></div>
+
+</div>
+
+<h1>芸能ステータス診断</h1>
+
+<p class="page-number">
+
+質問 2 / 6
+
+</p>
+
+<form id="questionForm">
+
+<div class="question">
+
+<h2>言葉遊びが好きだ。</h2>
+
+<div class="options">
+
+<label><input type="radio" name="q5" value="5" required>とてもそう思う</label>
+<label><input type="radio" name="q5" value="4">ややそう思う</label>
+<label><input type="radio" name="q5" value="3">どちらともいえない</label>
+<label><input type="radio" name="q5" value="2">あまりそう思わない</label>
+<label><input type="radio" name="q5" value="1">全くそう思わない</label>
+
+</div>
+
+</div>
+
+<div class="question">
+
+<h2>普段無意識にリアクションをとってしまう。</h2>
+
+<div class="options">
+
+<label><input type="radio" name="q6" value="5" required>とてもそう思う</label>
+<label><input type="radio" name="q6" value="4">ややそう思う</label>
+<label><input type="radio" name="q6" value="3">どちらともいえない</label>
+<label><input type="radio" name="q6" value="2">あまりそう思わない</label>
+<label><input type="radio" name="q6" value="1">全くそう思わない</label>
+
+</div>
+
+</div>
+
+<div class="question">
+
+<h2>自分とは違う人格になる方が自然に笑いを作れる。</h2>
+
+<div class="options">
+
+<label><input type="radio" name="q7" value="5" required>とてもそう思う</label>
+<label><input type="radio" name="q7" value="4">ややそう思う</label>
+<label><input type="radio" name="q7" value="3">どちらともいえない</label>
+<label><input type="radio" name="q7" value="2">あまりそう思わない</label>
+<label><input type="radio" name="q7" value="1">全くそう思わない</label>
+
+</div>
+
+</div>
+
+<div class="question">
+
+<h2>ここは自分じゃなくてこの人がやった方がウケるだろうなと思うことがある。</h2>
+
+<div class="options">
+
+<label><input type="radio" name="q8" value="5" required>とてもそう思う</label>
+<label><input type="radio" name="q8" value="4">ややそう思う</label>
+<label><input type="radio" name="q8" value="3">どちらともいえない</label>
+<label><input type="radio" name="q8" value="2">あまりそう思わない</label>
+<label><input type="radio" name="q8" value="1">全くそう思わない</label>
+
+</div>
+
+</div>
+
+<button type="submit" class="nextButton">
+
+次へ →
+
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+document.getElementById("questionForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const answers={
+
+q5:Number(document.querySelector('input[name="q5"]:checked').value),
+q6:Number(document.querySelector('input[name="q6"]:checked').value),
+q7:Number(document.querySelector('input[name="q7"]:checked').value),
+q8:Number(document.querySelector('input[name="q8"]:checked').value)
+
+};
+
+localStorage.setItem("question2",JSON.stringify(answers));
+
+window.location.href="question3.html";
+
+});
+
+</script>
+
+</body>
+
+</html>
