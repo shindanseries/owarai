@@ -29,38 +29,26 @@ function average(answers, keys) {
 // 出力順：P/S → N/A → I/B → O/C
 // ============================
 function calculateType(answers) {
-    // 1軸 P/S：高得点=P（パワー）、低得点=S（センス）
-    // P寄り質問：q2(ノリで押し切る), q10(雑でも勢い), q22(声量で空気を変える)
-    // S寄り質問：q5(言葉遊び), q13(独自の世界観), q18(文章だけで面白い)
-    // ※S寄り質問は反転（6-値）してP軸に統一
-    const PS_raw = average(answers, ["q2", "q10", "q22"]);
-    const PS_inv = average(answers, ["q5", "q13", "q18"]);
-    const PS = (PS_raw + (6 - PS_inv)) / 2;
-    const first = PS >= 3 ? "P" : "S";
 
-    // 2軸 N/A：高得点=A（アクト）、低得点=N（ナチュラル）
-    // A寄り質問：q1(演技が好き), q7(別人格の方が笑える), q16(ギャップに驚かれる)
-    // N寄り質問：q11(普段の自分をそのまま), q19(演技中も変わらない), q23(自分の体験談)
-    const NA_raw = average(answers, ["q1", "q7", "q16"]);
-    const NA_inv = average(answers, ["q11", "q19", "q23"]);
-    const NA = (NA_raw + (6 - NA_inv)) / 2;
-    const second = NA >= 3 ? "A" : "N";
+   // P/S軸：P寄り平均 vs S寄り平均を直接比較
+const PS_P = average(answers, ["q2", "q10", "q22"]); // パワー系
+const PS_S = average(answers, ["q5", "q13", "q18"]); // センス系
+const first = PS_P >= PS_S ? "P" : "S";
 
-    // 3軸 I/B：高得点=I（瞬発）、低得点=B（ビルド）
-    // I寄り質問：q4(急に振られても発揮), q17(にぎやかし大喜利), q21(70%を連発)
-    // B寄り質問：q8(この人がやった方がウケると思う), q12(伏線・構成が好き), q15(整理してから話す)
-    const IB_raw = average(answers, ["q4", "q17", "q21"]);
-    const IB_inv = average(answers, ["q8", "q12", "q15"]);
-    const IB = (IB_raw + (6 - IB_inv)) / 2;
-    const third = IB >= 3 ? "I" : "B";
+// N/A軸
+const NA_N = average(answers, ["q11", "q19", "q23"]); // ナチュラル系
+const NA_A = average(answers, ["q1", "q7", "q16"]);   // アクト系
+const second = NA_A >= NA_N ? "A" : "N";
 
-    // 4軸 O/C：高得点=C（秩序）、低得点=O（混沌）
-    // C寄り質問：q3(傷つける笑いNG), q20(周囲を見て役割を考える), q24(ルールの中でボケる)
-    // O寄り質問：q6(その場で笑いが取れればよい), q9(包み隠さず言う), q14(身内ノリが好き)
-    const OC_raw = average(answers, ["q3", "q20", "q24"]);
-    const OC_inv = average(answers, ["q6", "q9", "q14"]);
-    const OC = (OC_raw + (6 - OC_inv)) / 2;
-    const fourth = OC >= 3 ? "C" : "O";
+// I/B軸
+const IB_I = average(answers, ["q4", "q17", "q21"]);  // 瞬発系
+const IB_B = average(answers, ["q8", "q12", "q15"]);  // ビルド系
+const third = IB_I >= IB_B ? "I" : "B";
+
+// O/C軸
+const OC_C = average(answers, ["q3", "q20", "q24"]);  // 秩序系
+const OC_O = average(answers, ["q6", "q9", "q14"]);   // 混沌系
+const fourth = OC_C >= OC_O ? "C" : "O";
 
     return first + second + third + fourth;
 }
