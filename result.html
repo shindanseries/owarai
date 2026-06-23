@@ -1,12 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>お笑いステータス診断｜診断結果</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>診断結果</h1>
+
+<div class="result-card">
+
+<div id="typeCode" class="typeCode">---</div>
+
+<div id="typeName" class="typeName">芸人タイプ</div>
+
+<p id="description" class="description">診断結果を読み込み中...</p>
+
+</div>
+
+<div class="buttonArea">
+
+<button onclick="shareResult()" class="nextButton">
+Xでシェア
+</button>
+
+<a href="index.html" class="restartButton">
+もう一度診断する
+</a>
+
+</div>
+
+</div>
+
 <script>
 
 let answers = {};
 
+// ===== localStorage 読み込み（安全版）=====
 for (let i = 1; i <= 6; i++) {
   const data = JSON.parse(localStorage.getItem("question" + i) || "{}");
   Object.assign(answers, data);
 }
 
+// ===== 平均計算 =====
 function avg(list) {
   let sum = 0;
   let count = 0;
@@ -22,52 +71,62 @@ function avg(list) {
   return count === 0 ? 0 : sum / count;
 }
 
-// ===== 軸計算 =====
+// ===== 各軸 =====
 const IB = avg(["q4","q8","q12","q15","q17","q21"]);
 const PS = avg(["q2","q5","q10","q13","q18","q22"]);
 const CN = avg(["q1","q7","q11","q16","q19","q23"]);
 const CO = avg(["q3","q6","q9","q14","q20","q24"]);
 
-// ===== タイプ判定 =====
+// ===== タイプ判定（ここが重要）=====
 const first = IB >= 3 ? "I" : "B";
 const second = PS >= 3 ? "P" : "S";
 const third = CN >= 3 ? "A" : "N";
+
+// ❌ ここが元バグポイント（QA → CO）
 const fourth = CO >= 3 ? "C" : "O";
 
 const type = first + second + third + fourth;
 
-// ===== 割合計算（ここが追加）=====
-function percent(a, b) {
-  const total = a + b;
-  if (total === 0) return { a: 50, b: 50 };
-  return {
-    a: Math.round((a / total) * 100),
-    b: Math.round((b / total) * 100)
-  };
-}
-
-const ibP = percent(IB, 5 - IB);
-const psP = percent(PS, 5 - PS);
-const cnP = percent(CN, 5 - CN);
-const coP = percent(CO, 5 - CO);
+// ===== 結果データ =====
+const resultData = {
+PIAO:{name:"タイプA",text:"構成力と静かな表現を武器にする分析型。"},
+PIAC:{name:"タイプB",text:"勢いと演技力で空気を支配する主人公型。"},
+PINO:{name:"タイプC",text:"自然体で笑いを生み出す観察型。"},
+PINC:{name:"タイプD",text:"瞬発力抜群のムードメーカー型。"},
+SBAO:{name:"タイプM",text:"丁寧な構成とセンスが光る職人型。"},
+SBNC:{name:"タイプP",text:"自分らしさを武器にした万能型。"}
+};
 
 // ===== 表示 =====
-document.getElementById("typeCode").innerHTML = type;
+document.getElementById("typeCode").innerText = type;
 
-// 追加表示エリア（後でHTMLに入れる）
-document.getElementById("description").innerHTML =
-`
-<div>
-<p>${resultData?.[type]?.text || "未設定タイプ"}</p>
+const result = resultData[type];
 
-<hr>
+if (result) {
+  document.getElementById("typeName").innerText = result.name;
+  document.getElementById("description").innerText = result.text;
+} else {
+  document.getElementById("typeName").innerText = "未設定タイプ";
+  document.getElementById("description").innerText = "データ不足または設定ミス";
+}
 
-<p><b>I/B</b>：I ${ibP.a}% / B ${ibP.b}%</p>
-<p><b>P/S</b>：P ${psP.a}% / S ${psP.b}%</p>
-<p><b>A/N</b>：A ${cnP.a}% / N ${cnP.b}%</p>
-<p><b>C/O</b>：C ${coP.a}% / O ${coP.b}%</p>
+// ===== シェア =====
+function shareResult() {
+  const text = "私の芸能ステータス診断は「" + type + "」でした！";
+  const url = "https://migimimisan.github.io/owarai/";
 
-</div>
-`;
+  window.open(
+    "https://twitter.com/intent/tweet?text=" +
+    encodeURIComponent(text) +
+    "&url=" +
+    encodeURIComponent(url)
+  );
+}
+
+// デバッグ用
+console.log({ type, IB, PS, CN, CO });
 
 </script>
+
+</body>
+</html>
