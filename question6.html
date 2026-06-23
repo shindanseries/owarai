@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>芸能ステータス診断｜質問6/6</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="progress">
+
+<div class="progress-bar" style="width:100%;"></div>
+
+</div>
+
+<h1>芸能ステータス診断</h1>
+
+<p class="page-number">
+
+質問 6 / 6
+
+</p>
+
+<form id="questionForm">
+
+<div class="question">
+
+<h2>じっくり考えて100%の大喜利を出すよりも70%の大喜利を連発する方が得意だ。</h2>
+
+<div class="options">
+
+<label><input type="radio" name="q21" value="5" required>とてもそう思う</label>
+<label><input type="radio" name="q21" value="4">ややそう思う</label>
+<label><input type="radio" name="q21" value="3">どちらともいえない</label>
+<label><input type="radio" name="q21" value="2">あまりそう思わない</label>
+<label><input type="radio" name="q21" value="1">全くそう思わない</label>
+
+</div>
+
+</div>
+
+<div class="question">
+
+<h2>声量や勢いで空気を変えられる。</h2>
+
+<div class="options">
+
+<label><input type="radio" name="q22" value="5" required>とてもそう思う</label>
+<label><input type="radio" name="q22" value="4">ややそう思う</label>
+<label><input type="radio" name="q22" value="3">どちらともいえない</label>
+<label><input type="radio" name="q22" value="2">あまりそう思わない</label>
+<label><input type="radio" name="q22" value="1">全くそう思わない</label>
+
+</div>
+
+</div>
+
+<div class="question">
+
+<h2>自分自身の体験談で笑いを取りたい。</h2>
+
+<div class="options">
+
+<label><input type="radio" name="q23" value="5" required>とてもそう思う</label>
+<label><input type="radio" name="q23" value="4">ややそう思う</label>
+<label><input type="radio" name="q23" value="3">どちらともいえない</label>
+<label><input type="radio" name="q23" value="2">あまりそう思わない</label>
+<label><input type="radio" name="q23" value="1">全くそう思わない</label>
+
+</div>
+
+</div>
+
+<div class="question">
+
+<h2>ネタツイをしたことがある。</h2>
+
+<div class="options">
+
+<label><input type="radio" name="q24" value="5" required>とてもそう思う</label>
+<label><input type="radio" name="q24" value="4">ややそう思う</label>
+<label><input type="radio" name="q24" value="3">どちらともいえない</label>
+<label><input type="radio" name="q24" value="2">あまりそう思わない</label>
+<label><input type="radio" name="q24" value="1">全くそう思わない</label>
+
+</div>
+
+</div>
+
+<button type="submit" class="nextButton">
+
+診断結果を見る →
+
+</button>
+
+</form>
+
+</div>
+
+<script>
+
+document.getElementById("questionForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const answers={
+
+q21:Number(document.querySelector('input[name="q21"]:checked').value),
+q22:Number(document.querySelector('input[name="q22"]:checked').value),
+q23:Number(document.querySelector('input[name="q23"]:checked').value),
+q24:Number(document.querySelector('input[name="q24"]:checked').value)
+
+};
+
+localStorage.setItem("question6",JSON.stringify(answers));
+
+window.location.href="result.html";
+
+});
+
+</script>
+
+</body>
+
+</html>
