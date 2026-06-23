@@ -1,193 +1,98 @@
-// ============================
-// 芸能ステータス診断 Result JS
-// ============================
+"use strict";
 
-// 回答取得
+// ============================
+// 回答取得（安全版）
+// ============================
 let answers = {};
 
 for (let i = 1; i <= 6; i++) {
+    const raw = localStorage.getItem("question" + i);
+    const data = raw ? JSON.parse(raw) : {};
+    Object.assign(answers, data);
+}
 
-    const data = JSON.parse(localStorage.getItem("question" + i));
+// ============================
+// 平均計算（安全版）
+// ============================
+function average(list) {
+    let sum = 0;
+    let count = 0;
 
-    if (data) {
-
-        Object.assign(answers, data);
-
+    for (const key of list) {
+        const val = Number(answers[key]);
+        if (!isNaN(val)) {
+            sum += val;
+            count++;
+        }
     }
 
+    return count === 0 ? 0 : sum / count;
 }
 
-// 平均値
-function average(list) {
-
-    let sum = 0;
-
-    list.forEach(function (key) {
-
-        sum += Number(answers[key]);
-
-    });
-
-    return sum / list.length;
-
-}
-
-// 4軸判定
-
-const IorB =
-average(["q4","q8","q12","q15","q17","q21"]) >= 3
-? "I"
-: "B";
-
-const PorS =
-average(["q2","q5","q10","q13","q18","q22"]) >= 3
-? "P"
-: "S";
-
-const CorN =
-average(["q1","q7","q11","q16","q19","q23"]) >= 3
-? "C"
-: "N";
-
-const QorA =
-average(["q3","q6","q9","q14","q20","q24"]) >= 3
-? "A"
-: "Q";
-
-const type = IorB + PorS + CorN + QorA;
-
 // ============================
-// 16タイプ
+// PNIO ⇔ SABC 軸定義
 // ============================
 
+// 1軸：P / S
+const P_or_S = average(["q2","q5","q10","q13","q18","q22"]) >= 3 ? "P" : "S";
+
+// 2軸：N / A
+const N_or_A = average(["q1","q7","q11","q16","q19","q23"]) >= 3 ? "N" : "A";
+
+// 3軸：I / B
+const I_or_B = average(["q4","q8","q12","q15","q17","q21"]) >= 3 ? "I" : "B";
+
+// 4軸：O / C
+const O_or_C = average(["q3","q6","q9","q14","q20","q24"]) >= 3 ? "O" : "C";
+
+// ============================
+// タイプ生成
+// ============================
+const type = P_or_S + N_or_A + I_or_B + O_or_C;
+
+// ============================
+// 結果データ（最低限成立版）
+// ============================
 const resultData = {
 
-IPCQ:{
-
-title:"静かな天才型",
-
-text:"構成力と分析力で笑いを作るタイプ。伏線回収や緻密なネタが得意。"
-
+PNIO: {
+    title: "直感クリエイター型",
+    text: "自由な発想と感覚で笑いを生み出すタイプ。空気を作る側。"
 },
 
-IPCA:{
-
-title:"主人公型",
-
-text:"勢いと演技力で場を支配するエンターテイナー。"
-
+PNIC: {
+    title: "感性分析型",
+    text: "観察力と直感を組み合わせて笑いを設計するタイプ。"
 },
 
-IPNQ:{
-
-title:"観察者型",
-
-text:"自然体の空気感で笑いを生み出すタイプ。"
-
+PNIO: {
+    title: "自由表現型",
+    text: "枠にとらわれない発想で場を動かすタイプ。"
 },
 
-IPNA:{
-
-title:"ムードメーカー型",
-
-text:"瞬発力が高く、平場で最も力を発揮する。"
-
+PNOC: {
+    title: "バランス型クリエイター",
+    text: "感性と構造を両立する安定型。"
 },
 
-ISCQ:{
-
-title:"理論派型",
-
-text:"センスと構成力を兼ね備えた職人。"
-
+SABC: {
+    title: "構造分析エリート",
+    text: "論理と設計で笑いを組み立てる職人型。"
 },
 
-ISCA:{
-
-title:"スマートスター型",
-
-text:"洗練された演技で魅せる表現者。"
-
+SABO: {
+    title: "構成安定型",
+    text: "計画性と安定感を持つバランサー。"
 },
 
-ISNQ:{
-
-title:"ナチュラル職人型",
-
-text:"飾らない雰囲気で独特の笑いを作る。"
-
+SNBC: {
+    title: "冷静観察型",
+    text: "状況判断と分析で最適解を出すタイプ。"
 },
 
-ISNA:{
-
-title:"万能型",
-
-text:"誰とでも合わせられるオールラウンダー。"
-
-},
-
-BPCQ:{
-
-title:"脚本家型",
-
-text:"考え抜いた構成で勝負するタイプ。"
-
-},
-
-BPCA:{
-
-title:"熱血クリエイター型",
-
-text:"計画性とパワーを兼ね備えた演出家。"
-
-},
-
-BPNQ:{
-
-title:"ストーリーテラー型",
-
-text:"自然な語りで世界観を作る。"
-
-},
-
-BPNA:{
-
-title:"王道型",
-
-text:"バランス感覚が高く安定感抜群。"
-
-},
-
-BSCQ:{
-
-title:"技巧派型",
-
-text:"言葉選びと構成力が光る職人。"
-
-},
-
-BSCA:{
-
-title:"プロデューサー型",
-
-text:"全体を俯瞰しながら笑いを組み立てる。"
-
-},
-
-BSNQ:{
-
-title:"参謀型",
-
-text:"冷静に最適解を選び続けるタイプ。"
-
-},
-
-BSNA:{
-
-title:"オールマイティ型",
-
-text:"状況に応じて柔軟に立ち回れる万能プレイヤー。"
-
+SNBO: {
+    title: "理論派オールラウンダー",
+    text: "構造と柔軟性を両立する万能型。"
 }
 
 };
@@ -195,55 +100,49 @@ text:"状況に応じて柔軟に立ち回れる万能プレイヤー。"
 // ============================
 // 表示
 // ============================
+const typeCodeEl = document.getElementById("typeCode");
+const typeNameEl = document.getElementById("typeName");
+const descEl = document.getElementById("description");
 
-document.getElementById("typeCode").textContent = type;
+typeCodeEl.textContent = type;
 
-document.getElementById("typeName").textContent =
-resultData[type].title;
-
-document.getElementById("description").textContent =
-resultData[type].text;
-
-// ============================
-// シェア
-// ============================
-
-function shareResult(){
-
-const text =
-"私の芸能ステータス診断は「" +
-type +
-"（" +
-resultData[type].title +
-"）」でした！";
-
-const url =
-"https://migimimisan.github.io/owarai/";
-
-window.open(
-
-"https://twitter.com/intent/tweet?text=" +
-
-encodeURIComponent(text) +
-
-"&url=" +
-
-encodeURIComponent(url),
-
-"_blank"
-
-);
-
+if (resultData[type]) {
+    typeNameEl.textContent = resultData[type].title;
+    descEl.textContent = resultData[type].text;
+} else {
+    typeNameEl.textContent = "未定義タイプ";
+    descEl.textContent = "タイプ定義が不足しています：" + type;
 }
 
 // ============================
-// リセット
+// シェア機能
 // ============================
+function shareResult() {
 
-function restart(){
+    const title = resultData[type]?.title || "未定義タイプ";
 
-localStorage.clear();
+    const text =
+        `私の芸能ステータス診断は「${type}（${title}）」でした！`;
 
-location.href="index.html";
+    const url = "https://migimimisan.github.io/owarai/";
 
+    window.open(
+        "https://twitter.com/intent/tweet?text=" +
+        encodeURIComponent(text) +
+        "&url=" +
+        encodeURIComponent(url),
+        "_blank"
+    );
 }
+
+// ============================
+// デバッグ
+// ============================
+console.log("RESULT DEBUG:", {
+    type,
+    P_or_S,
+    N_or_A,
+    I_or_B,
+    O_or_C,
+    answers
+});
