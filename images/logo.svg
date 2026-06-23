@@ -1,0 +1,44 @@
+<svg
+xmlns="http://www.w3.org/2000/svg"
+width="512"
+height="512"
+viewBox="0 0 512 512">
+
+<rect
+width="512"
+height="512"
+rx="100"
+fill="#3d73ff"/>
+
+<circle
+cx="180"
+cy="200"
+r="25"
+fill="white"/>
+
+<circle
+cx="332"
+cy="200"
+r="25"
+fill="white"/>
+
+<path
+d="M160 330
+C200 390
+312 390
+352 330"
+stroke="white"
+stroke-width="22"
+fill="none"
+stroke-linecap="round"/>
+
+<path
+d="M120 120
+Q256 40
+392 120"
+stroke="white"
+stroke-width="18"
+fill="none"
+stroke-linecap="round"/>
+
+</svg>
