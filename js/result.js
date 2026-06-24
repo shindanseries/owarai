@@ -31,10 +31,10 @@ function calculateType(answers) {
     const IB_B = average(answers, ["q8", "q12", "q15"]);
     const third = IB_I >= IB_B ? "I" : "B";
 
-    // O=混沌、C=秩序に修正
+    // O=混沌、C=秩序
     const OC_O = average(answers, ["q6", "q9", "q14"]);  // 混沌系
     const OC_C = average(answers, ["q3", "q20", "q24"]); // 秩序系
-    const fourth = OC_C >= OC_O ? "C" : "O";
+    const fourth = OC_O >= OC_C ? "O" : "C";  // ← ここが逆だったので修正
 
     return first + second + third + fourth;
 }
@@ -85,8 +85,8 @@ function renderBars(pct) {
                 <span>${b.rightPct}% ${b.rightLabel}</span>
             </div>
             <div style="width:100%;height:18px;background:#3d73ff;border-radius:999px;overflow:hidden;">
-    <div style="width:${b.leftPct}%;height:100%;background:#ff3d6e;border-radius:999px 0 0 999px;"></div>
-</div>
+                <div style="width:${b.leftPct}%;height:100%;background:#ff3d6e;border-radius:999px 0 0 999px;"></div>
+            </div>
         </div>
     `).join("");
 }
