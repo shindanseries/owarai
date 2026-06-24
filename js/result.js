@@ -84,9 +84,9 @@ function renderBars(pct) {
                 <span>${b.leftLabel} ${b.leftPct}%</span>
                 <span>${b.rightPct}% ${b.rightLabel}</span>
             </div>
-            <div style="width:100%;height:18px;background:#e5e5e5;border-radius:999px;overflow:hidden;">
-                <div style="width:${b.leftPct}%;height:100%;background:#3d73ff;border-radius:999px;"></div>
-            </div>
+            <div style="width:100%;height:18px;background:#3d73ff;border-radius:999px;overflow:hidden;">
+    <div style="width:${b.leftPct}%;height:100%;background:#ff3d6e;border-radius:999px 0 0 999px;"></div>
+</div>
         </div>
     `).join("");
 }
