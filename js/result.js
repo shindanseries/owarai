@@ -31,10 +31,9 @@ function calculateType(answers) {
     const IB_B = average(answers, ["q8", "q12", "q15"]);
     const third = IB_I >= IB_B ? "I" : "B";
 
-    // O=混沌、C=秩序
-    const OC_O = average(answers, ["q6", "q9", "q14"]);  // 混沌系
-    const OC_C = average(answers, ["q3", "q20", "q24"]); // 秩序系
-    const fourth = OC_O >= OC_C ? "O" : "C";  // ← ここが逆だったので修正
+    const OC_O = average(answers, ["q6", "q9", "q14"]);
+    const OC_C = average(answers, ["q3", "q20", "q24"]);
+    const fourth = OC_O >= OC_C ? "O" : "C";
 
     return first + second + third + fourth;
 }
@@ -100,13 +99,13 @@ const resultData = {
     PAIC: { title: "デオキシススピードフォルム",     text: "パワーもスピードもおまかせ！！最短で笑いをお届け！時には違うフォルムにだってなれる！そんな君はまさにデオキシス！！" },
     PABO: { title: "力士カメレオン",                 text: "張り手、うっちゃり、がぶりより、あらゆる戦術すべてを使いこなすテクニシャン！！土俵の上で誰も敵なし！独壇場！！" },
     PABC: { title: "ピエロ爆弾魔",                   text: "爆弾作って、なんでもかんでもぶっ壊す！まさに「自然発生するエネルギー爆発の連続」！！重い場だって打破できる才能を持っている！！" },
-    SNIO: { title: "センス瞬発型",                   text: "言葉のセンスと即興力で光る。一言で会場の温度を変える天才肌。" },
-    SNIC: { title: "センス安定型",                   text: "言葉のセンスがあって場も読める。安心して任せられるクレバーな笑い職人。" },
-    SNBO: { title: "感性設計型",                     text: "独特な感性をじっくり練り上げる。唯一無二の世界観で笑いを生み出すタイプ。" },
-    SNBC: { title: "精密センス型",                   text: "センスと構成と秩序が三位一体。緻密に設計された笑いを届ける完成形。" },
-    SAIO: { title: "即興アクター型",                 text: "その場でキャラを作り笑いを生む。予測不能な動きで観客を翻弄する自由人。" },
-    SAIC: { title: "安定演技型",                     text: "しっかりしたキャラと秩序感で笑わせる。信頼できるクレバーな演者タイプ。" },
-    SABO: { title: "世界観アクター型",               text: "キャラと世界観で独自の空気を作る。一度見たら忘れられない個性派。" },
+    SNIO: { title: "路地裏の天才肌",                 text: "誰も気づかないところに笑いを見つける嗅覚の持ち主。言葉一つで場の空気をひっくり返す、静かなる革命家。" },
+    SNIC: { title: "辞書を食べた詩人",               text: "言葉の引き出しが多すぎて逆に困るタイプ。でもその言葉センスは本物で、一言で会場を唸らせる。" },
+    SNBO: { title: "哲学する職人",                   text: "笑いを芸術として捉えるこだわりの塊。じっくり時間をかけて生み出した一本が、客の記憶に一生残る。" },
+    SNBC: { title: "感性の建築家",                   text: "直感と設計図を同時に持つ稀有な存在。独特の世界観をきっちり組み上げて笑いを届ける完璧主義者。" },
+    SAIO: { title: "変身忍者",                       text: "次の瞬間何をするか誰にも読めない。センスとキャラ変で観客を翻弄し続ける、予測不能の曲者。" },
+    SAIC: { title: "仮面の策士",                     text: "キャラを纏いながらも冷静に場を支配する。笑いを計算しつくした上で演じる、クレバーな役者型。" },
+    SABO: { title: "ドラマ仕立ての宇宙人",           text: "独自の世界観と肉体で笑いを作る異星人。一度見たら忘れられない唯一無二の存在感を放つ。" },
     SABC: { title: "ガリバタ構造分析エリート型",     text: "演技・構成・秩序・センスを全て持つ理想形。完璧に設計された笑いを届ける頂点。" },
 };
 
@@ -129,7 +128,7 @@ renderBars(pct);
 function shareResult() {
     const title = resultData[type]?.title || type;
     const text = `私のお笑いステータス診断は「${type}（${title}）」でした！`;
-    const url = "https://migimimisan.github.io/owarai/";
+    const url = "https://shindanseries.github.io/owarai/";
     window.open(
         "https://twitter.com/intent/tweet?text=" +
         encodeURIComponent(text) + "&url=" + encodeURIComponent(url),
